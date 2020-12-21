@@ -1,5 +1,8 @@
 # Chooses random value from input form to help with SBC raffles
 
+Inputs include the full name of the person who donated and the number of entries associated with their donation.
+
+Will be able to upload excel file in the future to auto populate the names and entry values.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

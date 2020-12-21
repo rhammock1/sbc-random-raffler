@@ -60,13 +60,18 @@ class App extends React.Component {
           <legend>Input values to choose random winner</legend>
           <div className='form-group'>
             <label htmlFor='full_name'>Full Name: </label>
-            <input type='text' id='full_name' name='full_name' required />
+            <input type='text' id='full_name' name='full_name' />
           </div>
           <div className='form-group'>
             <label htmlFor='entries'>Number of Entries: </label>
-            <input type='text' id='entries' name='entries' required />
+            <input type='text' id='entries' name='entries' />
           </div>
           <button type='submit'>Submit Name</button>
+          <p id='or'> - or -</p>
+          <div className='form-group'>
+            <label htmlFor='file-import'>Import Excel sheet: </label>
+            <input type='file' id='file-import' name='file-import' />
+          </div>
         </fieldset>
       </form>
       <div className='namesAndEntries'>

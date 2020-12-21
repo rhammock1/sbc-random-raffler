@@ -1,4 +1,5 @@
-# Chooses random value from 
+# Chooses random value from input form to help with SBC raffles
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

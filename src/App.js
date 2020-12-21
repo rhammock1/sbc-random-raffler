@@ -6,6 +6,7 @@ class App extends React.Component {
     newPerson: '',
     winner: '',
     people: [],
+    entries: 0,
   }
   
   handlePeopleSubmit = (e) => {
@@ -15,8 +16,9 @@ class App extends React.Component {
     
     const entries = e.target.entries.value;
     const newPerson = { full_name, entries }
+
     let joined = this.state.people.concat(newPerson);
-    this.setState({ newPerson, people: joined })
+    this.setState({ newPerson, people: joined, entries: this.state.entries + parseFloat(entries) })
     e.target.reset();
   };
 
@@ -34,8 +36,20 @@ class App extends React.Component {
     // Winner submit button click
     e.preventDefault();
     this.shuffleArray(this.state.people);
-    let result = this.state.people[Math.floor(Math.random() * this.state.people.length)]
+    // let result = this.state.people[Math.floor(Math.random() * this.state.people.length)]
+    // this.setState({ winner: result })
+
+    let resultArray = [];
+    this.state.people.forEach(person => {
+      for(let i = 0; i < person.entries; i++) {
+        resultArray.push(person.full_name);
+      }
+    })
+    this.shuffleArray(resultArray);
+    console.log(resultArray);
+    let result = resultArray[Math.floor(Math.random() * resultArray.length)]
     this.setState({ winner: result })
+    
   };
 
   render() {
@@ -57,15 +71,15 @@ class App extends React.Component {
       </form>
       <div className='namesAndEntries'>
         <ul>
-          {this.state.people.map(person => {
+          {this.state.people.map((person, index) => {
             
-          return <li key={person.index}> {person.full_name} - {person.entries} </li>})}
+          return <li key={index}> {person.full_name} - {person.entries} </li>})}
         </ul>
         
         <button type='submit' onClick={e => this.handleWinnerSubmit(e)}> Find Winner </button>
       </div>
       <div className='results'>
-        {this.state.winner.full_name}
+        {this.state.winner}
       </div>
 
 

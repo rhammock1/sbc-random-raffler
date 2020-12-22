@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import config from './config';
+import Wheel from './Wheel/Wheel';
 
 class App extends React.Component {
   
@@ -78,7 +79,7 @@ class App extends React.Component {
 
   handleWinnerSubmit = (e) => {
     // Winner submit button click
-    e.preventDefault();
+    // e.preventDefault();
     let resultArray = [];
     if(this.state.people.length > 0) {
       // this.shuffleArray(this.state.people);
@@ -166,6 +167,7 @@ class App extends React.Component {
       <div className='results'>
         {this.state.winner}
       </div>
+      <Wheel handleWinner={this.handleWinnerSubmit} />
 
 
       </>

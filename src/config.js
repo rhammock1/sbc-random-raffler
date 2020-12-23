@@ -1,3 +1,3 @@
 export default {
-  API_ENDPOINT: 'http://localhost:8080/sbc/entries'
+  API_ENDPOINT: 'https://tranquil-plateau-50567.herokuapp.com/sbc/entries'
 }

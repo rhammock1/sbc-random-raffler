@@ -126,7 +126,7 @@ class Wheel extends React.Component {
     // set random spin degree and ease out time
     // set state variables to initiate animation
 
-    let randomSpin = Math.floor(Math.random() * 1201) + 750;
+    let randomSpin = Math.floor(Math.random() * 1201) + 1000;
     this.setState({
       rotate: randomSpin,
       easeOut: 2,

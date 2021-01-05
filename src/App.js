@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import config from './config';
 import Wheel from './Wheel/Wheel';
+import sbcLogo from './images/sbcLogo.png';
 
 class App extends React.Component {
   
@@ -12,7 +13,8 @@ class App extends React.Component {
     entries: 0,
     uploadEntries: [],
     csv: {},
-    formData: {}
+    formData: {},
+    resultArray: [],
   }
 
   handleUploadChange = (e) => {
@@ -25,7 +27,24 @@ class App extends React.Component {
     this.setState({ formData: formData })
     
   }
+
   handleUpload = async () => {
+    
+    await fetch(`${config.API_ENDPOINT}`, {
+      method: 'DELETE'
+    })
+      .then(res => {
+        if(!res.ok) {
+          return res.json().then(e => Promise.reject(e))
+        }
+        return res
+      })
+      .catch(error => {
+        console.error({ error })
+      })
+      
+    this.setState({ uploadEntries: []})
+  
     
     await fetch(`${config.API_ENDPOINT}`, {
       method: 'POST',
@@ -35,6 +54,7 @@ class App extends React.Component {
         if(!res.ok) {
           return res.json().then(e => Promise.reject(e))
         } else {
+          console.log('hello')
           return res.json();
         }
       })
@@ -50,6 +70,7 @@ class App extends React.Component {
         }
       })
       .then(uploadEntries => {
+        console.log(uploadEntries);
         this.setState({ uploadEntries })
       })
   }
@@ -75,7 +96,7 @@ class App extends React.Component {
         array[j] = temp;
     }
   };
-  
+
 
   handleWinnerSubmit = (e) => {
     // Winner submit button click
@@ -102,73 +123,45 @@ class App extends React.Component {
     console.log(resultArray);
     // let result = this.state.people[Math.floor(Math.random() * this.state.people.length)]
     // this.setState({ winner: result })
-
+    this.setState({resultArray})
    
     
     let result = resultArray[Math.floor(Math.random() * resultArray.length)]
     this.setState({ winner: result })
     
   };
-  handleClearData = e => {
-    e.preventDefault();
-    fetch(`${config.API_ENDPOINT}`, {
-      method: 'DELETE'
-    })
-      .then(res => {
-        if(!res.ok) {
-          return res.json().then(e => Promise.reject(e))
-        }
-        return res
-      })
-      .catch(error => {
-        console.error({ error })
-      })
-    this.setState({ uploadEntries: []})
-  }
+
 
   render() {
      this.fileInput = React.createRef();
     return (
       <>
+      <header>
+        <img width='25%' height='25%'src={sbcLogo} alt='Sports Biz Cares logo' className='logo' />
+        <h1>Sports Biz Cares</h1>
+      </header>
       <form id='form' onSubmit={e => this.handlePeopleSubmit(e)}>
         <fieldset>
           <legend>Input values to choose random winner</legend>
+
           <div className='form-group'>
-            <label htmlFor='full_name'>Full Name: </label>
-            <input type='text' id='full_name' name='full_name' />
-          </div>
-          <div className='form-group'>
-            <label htmlFor='entries'>Number of Entries: </label>
-            <input type='text' id='entries' name='entries' />
-          </div>
-          <button type='submit'>Submit Name</button>
-          <p id='or'> - or -</p>
-          <div className='form-group'>
-            <label htmlFor='csvFile'>Import Excel sheet: </label>
+            <label htmlFor='csvFile'>Import Excel sheet(saved as .csv): </label>
             <input onChange={this.handleUploadChange}type='file' id='csvFile' name='csvFile' ref={this.fileInput} />
             <button type='button' onClick={e => this.handleUpload(e)} >Upload</button>
           </div>
           <br />
-          <div className='form-group'>
-            <label htmlFor='clear'>Clear all data from database. Must be done before each upload!</label>
-            <button type='button' onClick={e => this.handleClearData(e)}>Clear database</button>
-          </div>
+
         </fieldset>
       </form>
-      <div className='namesAndEntries'>
-        <ul>
-          {this.state.people.map((person, index) => {
-            
-          return <li key={index}> {person.full_name} - {person.entries} </li>})}
-        </ul>
-        
-        <button type='submit' onClick={e => this.handleWinnerSubmit(e)}> Find Winner </button>
+
+      <div className='name-cycle'>
+        {this.state.name}
       </div>
+      
+      <Wheel handleWinner={this.handleWinnerSubmit} />
       <div className='results'>
         {this.state.winner}
       </div>
-      <Wheel handleWinner={this.handleWinnerSubmit} />
-
 
       </>
     );

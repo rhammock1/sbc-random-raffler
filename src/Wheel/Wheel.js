@@ -184,6 +184,7 @@ class Wheel extends React.Component {
   }
   reset = () => {
     // reset wheel and result
+    this.props.handleToggle();
     this.setState({
       // rotate: 0,
       // easeOut: 0,

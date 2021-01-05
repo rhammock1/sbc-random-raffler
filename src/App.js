@@ -54,7 +54,7 @@ class App extends React.Component {
         if(!res.ok) {
           return res.json().then(e => Promise.reject(e))
         } else {
-          console.log('hello')
+          
           return res.json();
         }
       })
@@ -70,7 +70,7 @@ class App extends React.Component {
         }
       })
       .then(uploadEntries => {
-        console.log(uploadEntries);
+        
         this.setState({ uploadEntries, uploading: false })
       })
   }
@@ -120,7 +120,7 @@ class App extends React.Component {
       })
     }
     this.shuffleArray(resultArray);
-    console.log(resultArray);
+    
     // let result = this.state.people[Math.floor(Math.random() * this.state.people.length)]
     // this.setState({ winner: result })
     this.setState({resultArray})

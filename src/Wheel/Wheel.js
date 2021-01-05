@@ -220,7 +220,8 @@ class Wheel extends React.Component {
           </button>
         )}
         {this.props.winner ? <div className='results'>
-        <p>Congratulations, {this.props.winner}!</p>
+        <p className='result-close'>Congratulations, {this.props.winner}!</p>
+        <button className='result-button' onClick={this.props.handleToggle}>Close</button>
       </div> : null}
         {/* {this.state.seen ? <ResultPopUp toggle={this.togglePop} resultId={this.state.winner.id} resultTitle={this.state.winner.title} /> : null } */}
       </div>

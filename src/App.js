@@ -130,6 +130,9 @@ class App extends React.Component {
     this.setState({ winner: result })
     
   };
+  handleToggle = () => {
+    this.setState({ winner: ''})
+  }
 
 
   render() {
@@ -157,7 +160,7 @@ class App extends React.Component {
         </fieldset>
       </form>
       
-      <Wheel winner={this.state.winner} handleWinner={this.handleWinnerSubmit} />
+      <Wheel handleToggle={this.handleToggle} winner={this.state.winner} handleWinner={this.handleWinnerSubmit} />
       </div>
       
 

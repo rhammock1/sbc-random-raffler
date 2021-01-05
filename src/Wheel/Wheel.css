@@ -9,7 +9,12 @@
   align-items:center;
   justify-content: space-evenly;
 }
-
+.results-close {
+  padding: 5px;
+}
+.result-button {
+  margin-bottom: 12px;
+}
 #wheel {
   min-width: 300px;
   min-height: 300px;

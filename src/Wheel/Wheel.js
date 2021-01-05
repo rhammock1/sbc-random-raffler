@@ -47,8 +47,20 @@ class Wheel extends React.Component {
     //dynamically genereate sectors from state wheelOptions
     let angle = 0;
     for(let i = 0; i < numOptions; i++) {
-      let text = this.state.wheelOptions[i];
-      this.renderSector(i + 1, text, angle, arcSize, this.getColor());
+      
+      const green = `rgba(189, 220, 215, 1)`;
+      const grey = `rgba(64, 64, 64, 1)`;
+      const blue = `rgba(54, 67, 84, 1)`;
+      const colorArray = [green, grey, blue];
+      let color;
+      if(i % 3 === 0) {
+        color = colorArray[0]
+      } else if (i % 3 === 1) {
+        color = colorArray[1]
+      } else if (i % 3 === 2) {
+        color = colorArray[2]
+      }
+      this.renderSector(i + 1, angle, arcSize, color);
       angle += arcSize;
     }
   }
@@ -81,7 +93,7 @@ class Wheel extends React.Component {
     });
   }
 
-  renderSector(index, text, start, arc, color) {
+  renderSector(index, start, arc, color) {
     // create canvas arc for each wheelOptions element
     let canvas = document.getElementById('wheel');
     let ctx = canvas.getContext('2d');
@@ -110,16 +122,20 @@ class Wheel extends React.Component {
     ctx.rotate(angle - arc / 2 + Math.PI / 1);
 
     // Handles text fill of each sector will need to figure out a good solution. Right now it just uses the first letter
-    ctx.fillText(text, -ctx.measureText(text).width /9, 1);
+    
     ctx.restore();
   }
 
   getColor() {
     // randomly generate rbg values for wheel options
+    
+
     let r = Math.floor(Math.random() * 255);
     let g = Math.floor(Math.random() * 255);
     let b = Math.floor(Math.random() * 255);
     return `rgba(${r},${g},${b},0.5)`;
+    
+   
   }
 
   spin = () => {
@@ -196,19 +212,16 @@ class Wheel extends React.Component {
 
         {this.state.spinning ? (
           <button type="button" id="reset" onClick={this.reset}>
-            reset
+            Reset
           </button>
         ) : (
           <button type="button" id="spin" onClick={this.spin}>
-            spin
+            Spin
           </button>
         )}
-        {/* <div className="display">
-          <span id="readout">
-            YOU WON:{"  "}
-            <span id="result">{this.props.wheelOptions[this.state.result]}</span>
-          </span>
-        </div> */}
+        {this.props.winner ? <div className='results'>
+        <p>Congratulations, {this.props.winner}!</p>
+      </div> : null}
         {/* {this.state.seen ? <ResultPopUp toggle={this.togglePop} resultId={this.state.winner.id} resultTitle={this.state.winner.title} /> : null } */}
       </div>
     );

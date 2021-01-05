@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import config from './config';
 import Wheel from './Wheel/Wheel';
-import sbcLogo from './images/sbcLogo.png';
+import sbcLogo from './images/sbcHeaderLogo.png';
 
 class App extends React.Component {
   
@@ -29,7 +29,7 @@ class App extends React.Component {
   }
 
   handleUpload = async () => {
-    
+    this.setState({ uploading: true })
     await fetch(`${config.API_ENDPOINT}`, {
       method: 'DELETE'
     })
@@ -71,7 +71,7 @@ class App extends React.Component {
       })
       .then(uploadEntries => {
         console.log(uploadEntries);
-        this.setState({ uploadEntries })
+        this.setState({ uploadEntries, uploading: false })
       })
   }
   
@@ -137,31 +137,29 @@ class App extends React.Component {
     return (
       <>
       <header>
-        <img width='25%' height='25%'src={sbcLogo} alt='Sports Biz Cares logo' className='logo' />
-        <h1>Sports Biz Cares</h1>
+        <img src={sbcLogo} alt='Sports Biz Cares logo' className='logo' />
+        <h1>SPORTS BIZ CARES</h1>
       </header>
+      <div className='container'>
       <form id='form' onSubmit={e => this.handlePeopleSubmit(e)}>
         <fieldset>
-          <legend>Input values to choose random winner</legend>
+          <legend><h2>Upload CSV File</h2></legend>
 
           <div className='form-group'>
-            <label htmlFor='csvFile'>Import Excel sheet(saved as .csv): </label>
+            <label htmlFor='csvFile'>Import Excel Sheet(.csv): </label>
             <input onChange={this.handleUploadChange}type='file' id='csvFile' name='csvFile' ref={this.fileInput} />
-            <button type='button' onClick={e => this.handleUpload(e)} >Upload</button>
+            
           </div>
+          <button className='upload' type='button' onClick={e => this.handleUpload(e)} >Upload</button> 
+          {this.state.uploading ? <p>Uploading...</p> : null}
           <br />
 
         </fieldset>
       </form>
-
-      <div className='name-cycle'>
-        {this.state.name}
+      
+      <Wheel winner={this.state.winner} handleWinner={this.handleWinnerSubmit} />
       </div>
       
-      <Wheel handleWinner={this.handleWinnerSubmit} />
-      <div className='results'>
-        {this.state.winner}
-      </div>
 
       </>
     );
